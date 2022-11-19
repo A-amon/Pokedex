@@ -10,7 +10,20 @@ Initially, I started this to try out some animations 😂 but it ended up teachi
 ## How it works
 <img src="https://github.com/A-amon/Pokedex/blob/master/assets/demo/pokedex-native.gif" width="300"/>  
 
-**Note:** The *Moves* screen is empty
+**Note:**  
+```
+The *Moves* screen is empty  
+  
+There were initially two issues encountered in this project (due to re-rendering after new data are added):
+- Styling messed up
+- List re-starts from top (not continuing from last seen item/index)  
+
+Solution:  
+'initialScrollIndex' prop (BUT, effect will be voided (re-start at top again) once started scrolling a little 😂) and  
+messy styling issue fixed  
+
+Also tried scrollToOffset but couldn't make it work (possibly due to this issue: https://github.com/software-mansion/react-native-reanimated/issues/587)
+```
 
 
 ## Tools/ Technologies
