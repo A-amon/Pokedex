@@ -10,7 +10,7 @@ export default function pokemon (state = initialState, action) {
         case GET_ALL_POKEMONS:
             return {
                 ...state,
-                items: action.pokemons
+                items: [...state.items, ...action.pokemons]
             }
 		case SET_CURRENT:
 			return {

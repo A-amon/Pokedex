@@ -10,10 +10,11 @@ const Home = ({ navigation }) => {
 		AnimatedFlatList, 
 		pokemons, 
 		scrollY,
+		prevPokemonsCount,
 		searchText,
-		setSearchText } = useHome()
-
-    return (
+		setSearchText,
+	loadPokemons } = useHome()
+	return (
         <StyledHome>
             <Title>
                 Pokedex
@@ -24,13 +25,17 @@ const Home = ({ navigation }) => {
             <StyledSearchbar value={searchText} onChangeText={setSearchText}/>
             {
                 pokemons.length > 0 && <AnimatedFlatList
+					initialScrollIndex={prevPokemonsCount.current > 0? prevPokemonsCount.current - 1: 0}
                     onScroll={scrollEventHandler()}
+					onEndReachedThreshold={0.3}
+					onEndReached={() => {
+						loadPokemons()
+					}}
                     data={pokemons.filter(pokemon => 
 						pokemon.name.
 						toLowerCase().
 						includes(searchText.toLowerCase()))}
                     keyExtractor={(item) => item.num}
-                    removeClippedSubviews={true}
                     renderItem={({ item, index }) => {
                         const cardHeight = 170
 

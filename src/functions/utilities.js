@@ -7,18 +7,19 @@ import { Colors } from '@styles/color'
  * @return {boolean}
  */
 const useIsMounted = () => {
-    const isMounted = useRef(false)
+    const isMounted = useRef(true)
 
     /**
      * Check status of mount (Is Mounted/ Not Mounted)
      * @return {function}
      */
     useEffect(() => {
-        isMounted.current = true
-        return () => isMounted.current = false
+		if(isMounted.current){
+			isMounted.current = false
+		}
     }, [])
 
-    return isMounted
+    return isMounted.current
 }
 
 /**
@@ -26,8 +27,8 @@ const useIsMounted = () => {
  */
 const useBgColor = (image) => {
     const defaultColor = Colors.mountainMist
-
     const [color, setColor] = useState(defaultColor)
+	const isMounted = useIsMounted()
 
     /**
      * Get primary/ prominent color of image
@@ -49,11 +50,8 @@ const useBgColor = (image) => {
      * @return {void}
      */
     useEffect(() => {
-		let isRun = true
-		isRun && getBgColor(image)
-
-		return () => {
-			isRun = false
+		if(isMounted){
+			getBgColor(image)
 		}
     }, [image])
 

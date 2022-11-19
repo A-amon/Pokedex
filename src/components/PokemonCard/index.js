@@ -51,4 +51,4 @@ PokemonCard.propTypes = {
     onPress: PropTypes.func
 }
 
-export default PokemonCard
+export default React.memo(PokemonCard, (prevProps, newProps) => prevProps.number === newProps.number)
