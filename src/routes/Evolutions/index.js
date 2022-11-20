@@ -16,16 +16,24 @@ const Evolutions = () => {
 	},[pokemons, pokemon])
 
 	const getEvolutions = (pokemons, pokemon) => {
-		const pEvols = pokemon.next_evolution
-		if(pEvols){
-			const _evolutions = []
-			_evolutions.push({...pokemon})
-			for(const pEvol of pEvols){
-				const pEvolNum = pEvol.num
-				const evolPokemon = pokemons.find(_pokemon => _pokemon.num === pEvolNum)
-				_evolutions.push(evolPokemon)
+		let basicPokemon = pokemon
+		if(pokemon?.basic_evolution){
+			basicPokemon = pokemons.find(_pokemon => pokemon.basic_evolution === _pokemon.num)
+		}
+		if(basicPokemon){
+			const {next_evolution} = basicPokemon
+			if(next_evolution?.length > 0){
+				const _evolutions = [basicPokemon]
+				
+				for(const evolution of next_evolution){
+					const {num: evolvedPokemonNumber} = evolution
+					const evolvedPokemon = pokemons.find(_pokemon => _pokemon.num === evolvedPokemonNumber)
+					if(evolvedPokemon){
+						_evolutions.push(evolvedPokemon)
+					}
+				}
+				setEvolutions([..._evolutions])
 			}
-			setEvolutions([..._evolutions])
 		}
 	}
 
